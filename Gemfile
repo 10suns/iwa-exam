@@ -27,6 +27,11 @@ gem 'ruby-readability', require: 'readability'
 gem 'slim', require: 'slim-rails'
 gem 'slim-rails'
 
+# On MacOS, to install bower client run
+# $ brew install node
+# $ npm install -g bower
+gem 'bower-rails'
+
 group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
