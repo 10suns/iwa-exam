@@ -23,6 +23,10 @@ gem 'nokogiri'
 
 gem 'ruby-readability', require: 'readability'
 
+# Use Slim template for views.
+gem 'slim', require: 'slim-rails'
+gem 'slim-rails'
+
 group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
