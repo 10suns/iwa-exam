@@ -1,0 +1,21 @@
+# @see https://docs.google.com/spreadsheets/d/1gOXRk-IsNY1-ZMUYQ_H_-CfegBHzoZBCsRS-dfven08/edit#gid=1662326043
+
+Layout/LineLength:
+  Max: 120
+
+Style/Documentation:
+  Enabled: false
+
+Style/MixinUsage:
+  Enabled: true
+  Exclude:
+  # exclude the auto generate files
+    - bin/setup
+    - bin/update
+
+Style/HashEachMethods:
+  Enabled: true
+Style/HashTransformKeys:
+  Enabled: true
+Style/HashTransformValues:
+  Enabled: true
