@@ -21,7 +21,7 @@ class ExtractNewsListService < ApplicationService
   private
 
   def doc
-    @doc = Nokogiri::HTML(URI.parse(url).open).xpath('//tr[@class="athing"]/td[@class="title"]/a')
+    @doc ||= Nokogiri::HTML(URI.parse(url).open).xpath('//tr[@class="athing"]/td[@class="title"]/a')
   end
 
   def news_list

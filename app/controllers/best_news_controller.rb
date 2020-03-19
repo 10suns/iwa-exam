@@ -13,6 +13,16 @@ class BestNewsController < ApplicationController
     render json: json
   end
 
+  def preview
+    result = ExtractPreviewService.execute(params[:url])
+    json = if result.success?
+             { success: true, data: result.data }
+           else
+             { success: false }
+           end
+    render json: json
+  end
+
   private
 
   def fetch_url
