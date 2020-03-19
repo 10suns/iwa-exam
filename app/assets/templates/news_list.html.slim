@@ -1,0 +1,22 @@
+h2 Hacker news Best
+
+.container (ng-controller="bestNewsController")
+  .row
+    .col-6 (ng-repeat="news in news_list", my-directive="news")
+      .card.mb-3 style=("max-width: 540px;") 
+        .row.no-gutters
+          .col-md-4.my-auto
+            / img.img-fluid (src="{{news.image}}")
+            .d-flex.justify-content-center
+                .spinner-border role="status" 
+                  span.sr-only Loading...
+          .col-md-8
+            .card-body
+              h5.card-title
+                | {{ news.title }}
+              .d-flex.justify-content-center.mt-4
+                .spinner-border role="status" 
+                  span.sr-only Loading...
+              / p.card-text
+              /   | {{ news.excerpt }}
+

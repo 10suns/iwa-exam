@@ -6,6 +6,9 @@ html
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag    'application', media: 'all'
-    = javascript_include_tag 'application'
   body ng-app="bestHackerNews"
-    = yield
+    .container
+      .row
+        .span12
+          ng-view
+    = javascript_include_tag 'application'

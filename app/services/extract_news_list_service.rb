@@ -29,6 +29,6 @@ class ExtractNewsListService < ApplicationService
   end
 
   def get_link(link)
-    ::URI.parse(link).host.present? ? link : "https://https://news.ycombinator.com/#{link}"
+    ::URI.parse(link).host.present? ? link : "https://news.ycombinator.com/#{link}"
   end
 end

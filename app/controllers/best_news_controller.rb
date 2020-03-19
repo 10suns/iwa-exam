@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class BestNewsController < ApplicationController
-  def index; end
+  def index
+    render "layouts/application"
+  end
 
   def news
     result = ExtractNewsListService.execute(fetch_url)

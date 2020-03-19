@@ -1,0 +1,27 @@
+var app = angular.module('bestHackerNews', ["ngResource", "ngRoute"]);
+
+app.config(function($routeProvider, $locationProvider) {
+  $routeProvider
+    .when("/",
+      { templateUrl: "<%= asset_path('news_list.html') %> ",
+        controller: "bestNewsController" })
+});
+
+app.controller('bestNewsController', function($scope, $http) {
+  $http.get('best_news')
+  .then(function(response) {
+    $scope.news_list = response.data.data
+    for(i = 0; i < $scope.news_list.length; i++) {
+      getPreviewInfo($scope.news_list[i]);
+      console.log($scope.news_list[i])
+    }
+  });
+
+  var getPreviewInfo = function(obj) {
+    $http.get('preview?url=' + obj.link)
+    .then(function(response) {
+      obj["image"] = response.data.data["image"]
+      obj["excerpt"] = response.data.data["excerpt"]
+    });
+  };
+});
