@@ -3,10 +3,11 @@
 require 'open-uri'
 
 class ExtractDetailService < ApplicationService
-  attr_reader :url
+  attr_reader :uri
 
   def initialize(url)
-    @url = url
+    @uri = URI(url)
+    @uri = URI::HTTP.build(host: @uri.to_s) if @uri.instance_of?(URI::Generic)
   end
 
   def execute
@@ -17,6 +18,6 @@ class ExtractDetailService < ApplicationService
   private
 
   def source
-    @source ||= URI.parse(url).open
+    @source ||= uri.open
   end
 end

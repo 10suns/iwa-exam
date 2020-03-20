@@ -1,0 +1,17 @@
+/*
+ *= require bootstrap/dist/css/bootstrap
+ *= require_self
+ */
+.container {
+  padding: 2rem 0rem;
+}
+
+h4 {
+  margin: 1rem 0rem 1rem;
+}
+
+.table-image {
+  td, th {
+    vertical-align: top;
+  }
+}

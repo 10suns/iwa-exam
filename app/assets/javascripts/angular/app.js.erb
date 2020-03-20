@@ -23,10 +23,11 @@ app.config(function($stateProvider, $urlRouterProvider) {
 function bestNewsController($scope, $http) {
   $http.get('best_news')
   .then(function(response) {
-    $scope.news_list = response.data.data
-    for(i = 0; i < $scope.news_list.length; i++) {
-      getPreviewInfo($scope.news_list[i]);
-      console.log($scope.news_list[i])
+    $scope.articles = response.data.data.articles
+    $scope.link_next_page = response.data.data.link_next_page
+    for(i = 0; i < $scope.articles.length; i++) {
+      getPreviewInfo($scope.articles[i]);
+      console.log($scope.articles[i])
     }
   });
 

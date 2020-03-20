@@ -31,7 +31,7 @@ class BestNewsController < ApplicationController
              { success: true, data: result.data }
            else
              { success: false }
-            end
+           end
     render json: json
   end
 

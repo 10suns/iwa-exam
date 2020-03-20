@@ -1,17 +1,17 @@
-h1 Hacker Best New
+h1 Best News
 .container (ng-controller="bestNewsController")
   .row
     .col-12
       table.table.table-image
         tbody
-          tr (ng-repeat="news in news_list", my-directive="news")
+          tr (ng-repeat="article in articles")
             td.w-25
-              img.img-fluid.img-thumbnail alt="{{news.title}}" src="{{news.image}}" /
+              img.img-fluid.img-thumbnail alt="{{article.title}}" src="{{article.image}}" /
             td
               h4
-                | {{ news.title }}
+                | {{ article.title }}
               span
-                | {{ news.excerpt }}
+                | {{ article.excerpt }}
             td
-              a.text-link href="#!/detail/{{news.link}}"
+              a.text-link href="#!/detail/{{article.link}}"
                 | Read more

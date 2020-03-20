@@ -3,30 +3,45 @@
 require 'open-uri'
 
 class ExtractPreviewService < ApplicationService
-  attr_reader :url
+  include Concerns::BuildUrl
+
+  attr_reader :uri
 
   Preview = Struct.new(:link, :image, :excerpt)
 
   def initialize(url)
-    @url = url
+    @uri = build_uri(url)
   end
 
   def execute
-    preview = Preview.new(url, image, excerpt)
+    preview = Preview.new(uri.to_s, image, excerpt)
     ServiceResult.let_success('Extract successfully', preview)
   end
 
   private
 
   def doc
-    @doc ||= Nokogiri::HTML(URI.parse(url).open)
+    @doc ||= Nokogiri::HTML(uri.open)
+  rescue StandardError => e
+    Rails.logger.error(e)
+    @doc = ''
   end
 
   def excerpt
-    doc.xpath('//meta[@property="og:description"]').first.try(:[], 'content')
+    return unless doc.present?
+
+    doc.xpath('//meta[@property="og:description"]|//meta[@name="description"]').first.try(:[], 'content')
   end
 
   def image
-    doc.xpath('//meta[@property="og:image"]').first.try(:[], 'content')
+    return default_image unless doc.present?
+
+    url = doc.xpath('//meta[@property="og:image"]').first.try(:[], 'content')
+    # decode url to avoid messing with # character
+    url.present? ? CGI.decode(build_uri(url, host: uri.host).to_s) : default_image
+  end
+
+  def default_image
+    ActionController::Base.helpers.asset_path('default-hacker-news.png')
   end
 end
