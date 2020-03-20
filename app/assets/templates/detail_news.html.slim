@@ -1,0 +1,7 @@
+.container (ng-controller="detailNewsController")
+  .row
+    a.btn.btn-primary href="#!/list" type="button"
+      span.glyphicon.glyphicon-menu-left
+      | < Back to list
+  .row
+    .col-12 ng-bind-html="trustContent"

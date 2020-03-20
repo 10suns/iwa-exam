@@ -23,10 +23,10 @@ class ExtractPreviewService < ApplicationService
   end
 
   def excerpt
-    doc.xpath('//meta[@property="og:description"]').first.try(:[], "content")
+    doc.xpath('//meta[@property="og:description"]').first.try(:[], 'content')
   end
 
   def image
-    doc.xpath('//meta[@property="og:image"]').first.try(:[], "content")
+    doc.xpath('//meta[@property="og:image"]').first.try(:[], 'content')
   end
 end

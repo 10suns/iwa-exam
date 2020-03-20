@@ -37,8 +37,13 @@ function bestNewsController($scope, $http) {
       obj["excerpt"] = response.data.data["excerpt"]
     });
   };
-}
+};
 
-function detailNewsController($scope, $stateParams, $state, $location) {
-  $scope.link = $stateParams.link
-}
+function detailNewsController($scope, $stateParams, $state, $location, $http, $sce) {
+  console.log($stateParams.link);
+  $http.get('detail?url=' + $stateParams.link)
+    .then(function(response) {
+      $scope.content = (response.data.data);
+      $scope.trustContent = $sce.trustAsHtml($scope.content);
+    });
+};
