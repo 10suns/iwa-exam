@@ -1,13 +1,26 @@
-var app = angular.module('bestHackerNews', ["ngResource", "ngRoute"]);
+var app = angular.module('bestHackerNews', ["ngResource", "ui.router"])
+  .controller('bestNewsController', bestNewsController)
+  .controller('detailNewsController', detailNewsController);
 
-app.config(function($routeProvider, $locationProvider) {
-  $routeProvider
-    .when("/",
-      { templateUrl: "<%= asset_path('news_list.html') %> ",
-        controller: "bestNewsController" })
+app.config(function($stateProvider, $urlRouterProvider) {
+  $urlRouterProvider.otherwise("/list");
+  var newsListState = {
+    url: '/list',
+    templateUrl: "<%= asset_path('news_list.html') %>",
+    controller: bestNewsController
+  }
+
+  var detailNewsState = {
+    url: "/detail/{link:.*}",
+    templateUrl: "<%= asset_path('detail_news.html') %>",
+    controller: detailNewsController
+  }
+
+  $stateProvider.state("list", newsListState);
+  $stateProvider.state("detail", detailNewsState);
 });
 
-app.controller('bestNewsController', function($scope, $http) {
+function bestNewsController($scope, $http) {
   $http.get('best_news')
   .then(function(response) {
     $scope.news_list = response.data.data
@@ -24,4 +37,8 @@ app.controller('bestNewsController', function($scope, $http) {
       obj["excerpt"] = response.data.data["excerpt"]
     });
   };
-});
+}
+
+function detailNewsController($scope, $stateParams, $state, $location) {
+  $scope.link = $stateParams.link
+}

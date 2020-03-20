@@ -1,4 +1,4 @@
 asset 'angular'
 asset 'bootstrap'
 asset 'angular-resource'
-asset 'angular-route'
+asset 'angular-ui-router'

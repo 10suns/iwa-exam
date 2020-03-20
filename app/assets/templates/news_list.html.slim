@@ -1,22 +1,17 @@
-h2 Hacker news Best
-
+h1 Hacker Best New
 .container (ng-controller="bestNewsController")
   .row
-    .col-6 (ng-repeat="news in news_list", my-directive="news")
-      .card.mb-3 style=("max-width: 540px;") 
-        .row.no-gutters
-          .col-md-4.my-auto
-            / img.img-fluid (src="{{news.image}}")
-            .d-flex.justify-content-center
-                .spinner-border role="status" 
-                  span.sr-only Loading...
-          .col-md-8
-            .card-body
-              h5.card-title
+    .col-12
+      table.table.table-image
+        tbody
+          tr (ng-repeat="news in news_list", my-directive="news")
+            td.w-25
+              img.img-fluid.img-thumbnail alt="{{news.title}}" src="{{news.image}}" /
+            td
+              h4
                 | {{ news.title }}
-              .d-flex.justify-content-center.mt-4
-                .spinner-border role="status" 
-                  span.sr-only Loading...
-              / p.card-text
-              /   | {{ news.excerpt }}
-
+              span
+                | {{ news.excerpt }}
+            td
+              a.text-link href="#!/detail/{{news.link}}"
+                | Read more
