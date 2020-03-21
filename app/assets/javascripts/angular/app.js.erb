@@ -34,6 +34,7 @@ function bestNewsController($scope, $http) {
   var getPreviewInfo = function(obj) {
     $http.get('preview?url=' + obj.link)
     .then(function(response) {
+      obj["finish"] = true
       obj["image"] = response.data.data["image"]
       obj["excerpt"] = response.data.data["excerpt"]
     });

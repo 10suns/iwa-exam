@@ -28,7 +28,7 @@ class ExtractPreviewService < ApplicationService
   end
 
   def excerpt
-    return unless doc.present?
+    return "" unless doc.present?
 
     doc.xpath('//meta[@property="og:description"]|//meta[@name="description"]').first.try(:[], 'content')
   end
@@ -38,7 +38,7 @@ class ExtractPreviewService < ApplicationService
 
     url = doc.xpath('//meta[@property="og:image"]').first.try(:[], 'content')
     # decode url to avoid messing with # character
-    url.present? ? CGI.decode(build_uri(url, host: uri.host).to_s) : default_image
+    url.present? ? URI.decode(build_uri(url, host: uri.host).to_s) : default_image
   end
 
   def default_image

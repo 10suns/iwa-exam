@@ -1,17 +1,33 @@
 h1 Best News
 .container (ng-controller="bestNewsController")
+  .row ng-hide="articles"
+    .col-12
+      .text-center
+        .spinner-border (role="status")
+          .sr-only Loading
   .row
     .col-12
       table.table.table-image
         tbody
           tr (ng-repeat="article in articles")
             td.w-25
-              img.img-fluid.img-thumbnail alt="{{article.title}}" src="{{article.image}}" /
+              .row ng-hide="article.finish"
+                .col-5.m-5
+                  .text-center
+                    .spinner-border (role="status")
+                      .sr-only Loading
+              img.img-fluid.img-thumbnail ng-show="article.finish" alt="{{article.title}}" src="{{article.image}}" /
             td
               h4
                 | {{ article.title }}
-              span
-                | {{ article.excerpt }}
-            td
-              a.text-link href="#!/detail/{{article.link}}"
-                | Read more
+              .row ng-hide="article.finish"
+                .col-5.m-5
+                  .text-center
+                    .spinner-border (role="status")
+                      .sr-only Loading
+              div ng-show="article.finish"
+                p
+                  | {{ article.excerpt }}
+                p
+                  a.text-link href="#!/detail/{{article.link}}"
+                    | Read more
