@@ -16,7 +16,7 @@ h1 Best News
                   .text-center
                     .spinner-border (role="status")
                       .sr-only Loading
-              img.img-fluid.img-thumbnail ng-show="article.finish" alt="{{article.title}}" src="{{article.image}}" /
+              img.img-fluid.img-thumbnail ng-show="article.finish" alt="{{article.title}}" ng-src="{{article.image}}" /
             td
               h4
                 | {{ article.title }}
@@ -31,3 +31,8 @@ h1 Best News
                 p
                   a.text-link href="#!/detail/{{article.link}}"
                     | Read more
+  .row ng-show="link_next_page"
+    .col-12
+      .text-center
+        a.text-link.btn.btn-primary href="#!/list/{{page + 1}}"
+          | Load more

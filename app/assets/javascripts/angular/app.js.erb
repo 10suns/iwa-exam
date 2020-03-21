@@ -3,9 +3,9 @@ var app = angular.module('bestHackerNews', ["ngResource", "ui.router"])
   .controller('detailNewsController', detailNewsController);
 
 app.config(function($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise("/list");
+  $urlRouterProvider.otherwise("/list/1");
   var newsListState = {
-    url: '/list',
+    url: '/list/{page:[0-9]+}',
     templateUrl: "<%= asset_path('news_list.html') %>",
     controller: bestNewsController
   }
@@ -20,16 +20,17 @@ app.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider.state("detail", detailNewsState);
 });
 
-function bestNewsController($scope, $http) {
-  $http.get('best_news')
-  .then(function(response) {
-    $scope.articles = response.data.data.articles
-    $scope.link_next_page = response.data.data.link_next_page
-    for(i = 0; i < $scope.articles.length; i++) {
-      getPreviewInfo($scope.articles[i]);
-      console.log($scope.articles[i])
-    }
-  });
+function bestNewsController($scope, $stateParams, $state, $location, $http) {
+  $scope.page = parseInt($stateParams.page);
+  $http.get('best_news/' + $stateParams.page)
+    .then(function(response) {
+      $scope.articles = response.data.data.articles;
+      $scope.link_next_page = response.data.data.link_next_page;
+      console.log($scope.link_next_page);
+      for(i = 0; i < $scope.articles.length; i++) {
+        getPreviewInfo($scope.articles[i]);
+      }
+    });
 
   var getPreviewInfo = function(obj) {
     $http.get('preview?url=' + obj.link)
@@ -42,7 +43,6 @@ function bestNewsController($scope, $http) {
 };
 
 function detailNewsController($scope, $stateParams, $state, $location, $http, $sce) {
-  console.log($stateParams.link);
   $http.get('detail?url=' + $stateParams.link)
     .then(function(response) {
       $scope.content = (response.data.data);
