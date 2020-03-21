@@ -1,6 +1,9 @@
 {
   "name": "iwa-exam",
   "private": true,
+  "engines": {
+    "node": "13.11.x"
+  },
   "dependencies": {
     "bower": "1.8.8"
   },
