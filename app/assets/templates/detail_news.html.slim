@@ -1,7 +1,16 @@
 .container (ng-controller="detailNewsController")
-  .row
-    a.btn.btn-primary href="#!/list" type="button"
-      span.glyphicon.glyphicon-menu-left
-      | < Back to list
-  .row
-    .col-12 ng-bind-html="trustContent"
+  .col-12 ng-show="loading"
+      .text-center
+        .spinner-border (role="status")
+          .sr-only Loading
+  .col-12 ng-hide="loading"
+    h1
+      | {{article.title}}
+    .row.mt-4.mb-4
+      a.text-link href="#!/list" type="button"
+        span.glyphicon.glyphicon-menu-left
+        | < Back to list
+    .row
+      p
+        img alt="{{article.title}}" ng-src="{{article.image}}"
+      div ng-bind-html="trustContent"

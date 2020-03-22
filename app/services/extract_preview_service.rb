@@ -28,17 +28,21 @@ class ExtractPreviewService < ApplicationService
   end
 
   def excerpt
-    return unless doc.present?
+    Rails.cache.fetch("#{uri.to_s}_excerpt", expires_in: 3.hour) do
+      return unless doc.present?
 
-    doc.xpath('//meta[@property="og:description"]|//meta[@name="description"]').first.try(:[], 'content')
+      doc.xpath('//meta[@property="og:description"]|//meta[@name="description"]').first.try(:[], 'content')
+    end
   end
 
   def image
-    return default_image unless doc.present?
+    Rails.cache.fetch("#{uri.to_s}_image", expires_in: 3.hour) do
+      return default_image unless doc.present?
 
-    url = doc.xpath('//meta[@property="og:image"]').first.try(:[], 'content')
-    # decode url to avoid messing with # character
-    url.present? ? URI.decode(build_uri(url, host: uri.host).to_s) : default_image
+      url = doc.xpath('//meta[@property="og:image"]').first.try(:[], 'content')
+      # decode url to avoid messing with # character
+      url.present? ? URI.decode(build_uri(url, host: uri.host).to_s) : default_image
+    end
   end
 
   def default_image

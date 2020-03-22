@@ -33,6 +33,8 @@ h1 Best News
                     | Read more
   .row ng-show="link_next_page"
     .col-12
-      .text-center
-        a.text-link.btn.btn-primary href="#!/list/{{page + 1}}"
-          | Load more
+      a.float-left.text-link.btn.btn-primary href="#!/list/{{prev_page}}" ng-show="prev_page"
+          | Previous
+      a.float-right.text-link.btn.btn-primary href="#!/list/{{next_page}}" ng-show="next_page"
+        | Next
+        

@@ -22,11 +22,15 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
 function bestNewsController($scope, $stateParams, $state, $location, $http) {
   $scope.page = parseInt($stateParams.page);
+  $scope.next_page = $scope.page + 1;
+  if ($scope.page > 1) {
+    $scope.prev_page = $scope.page - 1;
+  }
+
   $http.get('best_news/' + $stateParams.page)
     .then(function(response) {
       $scope.articles = response.data.data.articles;
       $scope.link_next_page = response.data.data.link_next_page;
-      console.log($scope.link_next_page);
       for(i = 0; i < $scope.articles.length; i++) {
         getPreviewInfo($scope.articles[i]);
       }
@@ -43,9 +47,11 @@ function bestNewsController($scope, $stateParams, $state, $location, $http) {
 };
 
 function detailNewsController($scope, $stateParams, $state, $location, $http, $sce) {
+  $scope.loading = true;
   $http.get('detail?url=' + $stateParams.link)
     .then(function(response) {
-      $scope.content = (response.data.data);
-      $scope.trustContent = $sce.trustAsHtml($scope.content);
+      $scope.loading = false;
+      $scope.article = (response.data.data);
+      $scope.trustContent = $sce.trustAsHtml($scope.article.content);
     });
 };
