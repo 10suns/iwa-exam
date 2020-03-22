@@ -8,9 +8,8 @@ module Concerns::BuildUrl
     uri = URI(str)
     return uri unless uri.instance_of?(URI::Generic)
 
-    partitions = str.partition('/')
-    host = options[:host] || partitions.first
-    path = adjust_path(options[:host].present? ? partitions.last : str)
+    host = options[:host]
+    path = adjust_path(str)
     URI::HTTP.build(host: host, path: path)
   end
 

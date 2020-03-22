@@ -15,7 +15,13 @@ Style/MixinUsage:
 
 Style/HashEachMethods:
   Enabled: true
+
 Style/HashTransformKeys:
   Enabled: true
+
 Style/HashTransformValues:
   Enabled: true
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*.rb'

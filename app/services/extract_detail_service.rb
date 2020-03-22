@@ -12,15 +12,11 @@ class ExtractDetailService < ApplicationService
   end
 
   def execute
-    data = { content: content, title: title, image: image }
+    data = { content: readability.content, title: title, image: image }
     ServiceResult.let_success('Extract successfully', data)
   end
 
   private
-
-  def content
-    @content ||= Readability::Document.new(source.read).content
-  end
 
   def image
     Rails.cache.fetch("#{uri}_image", expires_in: 3.hour) do
@@ -40,11 +36,15 @@ class ExtractDetailService < ApplicationService
     end
   end
 
-  def source
-    @source ||= uri.open
+  def readability
+    @readability ||= Readability::Document.new(source.read)
   end
 
   def doc
     @doc ||= Nokogiri::HTML(uri.open)
+  end
+
+  def source
+    @source ||= uri.open
   end
 end
