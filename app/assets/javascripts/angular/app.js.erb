@@ -27,17 +27,19 @@ function bestNewsController($scope, $stateParams, $state, $location, $http) {
     $scope.prev_page = $scope.page - 1;
   }
 
-  $http.get('best_news/' + $stateParams.page)
+  $http.get('best_news/' + $stateParams.page, { cache: true })
     .then(function(response) {
       $scope.articles = response.data.data.articles;
       $scope.link_next_page = response.data.data.link_next_page;
       for(i = 0; i < $scope.articles.length; i++) {
         getPreviewInfo($scope.articles[i]);
       }
+    }, function errorCallback(response) {
+      alert("An error occur. Please refresh the page and try again!");
     });
 
   var getPreviewInfo = function(obj) {
-    $http.get('preview?url=' + obj.link)
+    $http.get('preview?url=' + obj.link, { cache: true })
     .then(function(response) {
       obj["finish"] = true
       obj["image"] = response.data.data["image"]
@@ -48,10 +50,12 @@ function bestNewsController($scope, $stateParams, $state, $location, $http) {
 
 function detailNewsController($scope, $stateParams, $state, $location, $http, $sce) {
   $scope.loading = true;
-  $http.get('detail?url=' + $stateParams.link)
+  $http.get('detail?url=' + $stateParams.link, { cache: true })
     .then(function(response) {
       $scope.loading = false;
       $scope.article = (response.data.data);
       $scope.trustContent = $sce.trustAsHtml($scope.article.content);
+    }, function errorCallback(response) {
+      alert("An error occur. Please refresh the page and try again!");
     });
 };
