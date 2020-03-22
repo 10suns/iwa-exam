@@ -3,8 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe BestNewsController, type: :controller do
-  let(:success) { ServiceResult.new('Success', true, { data: 'data' }) }
-  let(:fail) { ServiceResult.new('Fail', false, nil) }
+  let(:success_result) { ServiceResult.new('Success', true, { data: 'data' }) }
+  let(:failed_result) { ServiceResult.new('Fail', false, nil) }
   describe 'GET #index' do
     it 'should return 200' do
       get :index
@@ -15,7 +15,7 @@ RSpec.describe BestNewsController, type: :controller do
   describe 'GET #news' do
     context 'when extract list successfully' do
       before do
-        allow(ExtractNewsListService).to receive(:execute).and_return(success)
+        allow(ExtractNewsListService).to receive(:execute).and_return(success_result)
       end
       it 'should call ExtractNewsListService' do
         expect(ExtractNewsListService).to receive(:execute).with('https://news.ycombinator.com/best?p=1')
@@ -24,12 +24,12 @@ RSpec.describe BestNewsController, type: :controller do
       end
       it 'should return success json' do
         get :news, params: { page: 1 }
-        expect(response.body).to eq({ success: true, data: success.data }.to_json)
+        expect(response.body).to eq({ success: true, data: success_result.data }.to_json)
       end
     end
     context 'when extract list fail' do
       before do
-        allow(ExtractNewsListService).to receive(:execute).and_return(raise)
+        allow(ExtractNewsListService).to receive(:execute).and_return(failed_result)
       end
       it 'should return success json' do
         get :news, params: { page: 1 }
@@ -40,7 +40,7 @@ RSpec.describe BestNewsController, type: :controller do
   describe 'GET #preview' do
     context 'when extract preview successfully' do
       before do
-        allow(ExtractPreviewService).to receive(:execute).and_return(success)
+        allow(ExtractPreviewService).to receive(:execute).and_return(success_result)
       end
       it 'should call ExtractPrevewService' do
         expect(ExtractPreviewService).to receive(:execute).with('http://test.com')
@@ -49,12 +49,12 @@ RSpec.describe BestNewsController, type: :controller do
       end
       it 'should return success json' do
         get :preview, params: { url: 'http://test.com' }
-        expect(response.body).to eq({ success: true, data: success.data }.to_json)
+        expect(response.body).to eq({ success: true, data: success_result.data }.to_json)
       end
     end
     context 'when extract preview false' do
       before do
-        allow(ExtractPreviewService).to receive(:execute).and_return(raise)
+        allow(ExtractPreviewService).to receive(:execute).and_return(failed_result)
       end
       it 'should return success json' do
         get :preview, params: { url: 'http://test.com' }
@@ -65,7 +65,7 @@ RSpec.describe BestNewsController, type: :controller do
   describe 'GET #detail' do
     context 'when extract detail successfully' do
       before do
-        allow(ExtractDetailService).to receive(:execute).and_return(success)
+        allow(ExtractDetailService).to receive(:execute).and_return(success_result)
       end
       it 'should call ExtractPrevewService' do
         expect(ExtractDetailService).to receive(:execute).with('http://test.com')
@@ -74,12 +74,12 @@ RSpec.describe BestNewsController, type: :controller do
       end
       it 'should return success json' do
         get :detail, params: { url: 'http://test.com' }
-        expect(response.body).to eq({ success: true, data: success.data }.to_json)
+        expect(response.body).to eq({ success: true, data: success_result.data }.to_json)
       end
     end
     context 'when extract preview false' do
       before do
-        allow(ExtractDetailService).to receive(:execute).and_return(raise)
+        allow(ExtractDetailService).to receive(:execute).and_return(failed_result)
       end
       it 'should return success json' do
         get :detail, params: { url: 'http://test.com' }
