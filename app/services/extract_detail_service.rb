@@ -12,7 +12,7 @@ class ExtractDetailService < ApplicationService
   end
 
   def execute
-    data = { content: content, title: title, image: image}
+    data = { content: content, title: title, image: image }
     ServiceResult.let_success('Extract successfully', data)
   end
 
@@ -23,7 +23,7 @@ class ExtractDetailService < ApplicationService
   end
 
   def image
-    Rails.cache.fetch("#{uri.to_s}_image", expires_in: 3.hour) do
+    Rails.cache.fetch("#{uri}_image", expires_in: 3.hour) do
       return default_image unless doc.present?
 
       url = doc.xpath('//meta[@property="og:image"]').first.try(:[], 'content')
@@ -33,7 +33,7 @@ class ExtractDetailService < ApplicationService
   end
 
   def title
-    Rails.cache.fetch("#{uri.to_s}_title", expires_in: 3.hour) do
+    Rails.cache.fetch("#{uri}_title", expires_in: 3.hour) do
       return unless doc.present?
 
       doc.xpath('//head/title').first.content

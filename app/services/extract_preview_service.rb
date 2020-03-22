@@ -28,7 +28,7 @@ class ExtractPreviewService < ApplicationService
   end
 
   def excerpt
-    Rails.cache.fetch("#{uri.to_s}_excerpt", expires_in: 3.hour) do
+    Rails.cache.fetch("#{uri}_excerpt", expires_in: 3.hour) do
       return unless doc.present?
 
       doc.xpath('//meta[@property="og:description"]|//meta[@name="description"]').first.try(:[], 'content')
@@ -36,7 +36,7 @@ class ExtractPreviewService < ApplicationService
   end
 
   def image
-    Rails.cache.fetch("#{uri.to_s}_image", expires_in: 3.hour) do
+    Rails.cache.fetch("#{uri}_image", expires_in: 3.hour) do
       return default_image unless doc.present?
 
       url = doc.xpath('//meta[@property="og:image"]').first.try(:[], 'content')

@@ -38,6 +38,6 @@ class BestNewsController < ApplicationController
   private
 
   def fetch_url
-    URI::HTTPS.build(host: "news.ycombinator.com", path: "/best", query: { p: params[:page]}.to_query).to_s
+    URI::HTTPS.build(host: 'news.ycombinator.com', path: '/best', query: { p: params[:page] }.to_query).to_s
   end
 end
