@@ -4,14 +4,14 @@ Fetch and display the the list from https://news.ycombinator.com/best
 
 * Ruby version
 
-Ruby 2.6.1
+  - Ruby 2.6.1
 
 * System dependencies
 
-NodeJS 3.11.x
-Bower 1.8.8
+  - NodeJS 3.11.x
+  - Bower 1.8.8
 
-* Configuration
+### Configuration
 
 Run
 
@@ -22,13 +22,13 @@ $ bundle install --path vendor/bundle
 $ bundle exec rake bower:install
 ```
 
-* How to run the test suite
+### How to run the test suite
 
 ```
 $bundle exec rspec
 ```
 
-* Deployment instructions
+### Deployment instructions
 
 Heroku
 

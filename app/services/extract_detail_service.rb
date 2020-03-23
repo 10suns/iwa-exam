@@ -47,4 +47,8 @@ class ExtractDetailService < ApplicationService
   def source
     @source ||= uri.open
   end
+
+  def default_image
+    ActionController::Base.helpers.asset_path('default-hacker-news.png')
+  end
 end

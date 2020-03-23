@@ -29,7 +29,7 @@ h1 Best News
                 p
                   | {{ article.excerpt }}
                 p
-                  a.text-link href="#!/detail/{{article.link}}"
+                  a.text-link href="#!/detail?link={{article.link}}"
                     | Read more
   .row ng-show="link_next_page"
     .col-12

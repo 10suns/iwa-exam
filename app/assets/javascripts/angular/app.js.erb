@@ -11,7 +11,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
   }
 
   var detailNewsState = {
-    url: "/detail/{link:.*}",
+    url: "/detail?link",
     templateUrl: "<%= asset_path('detail_news.html') %>",
     controller: detailNewsController
   }
